@@ -1,0 +1,12 @@
+*.env
+
+tmp
+# *.sh
+
+.DS_Store
+# .vscode/
+*.log
+
+server
+
+test_result/
