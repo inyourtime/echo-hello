@@ -1,15 +1,20 @@
 package main
 
 import (
-	"net/http"
+	"echo-hello/bootstrap"
+	"echo-hello/delivery/route"
 
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
+	app := bootstrap.App()
+	env := app.Env
+	db := app.Db
+
 	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, "Hello, World!")
-	})
-	e.Logger.Fatal(e.Start(":1323"))
+
+	route.Setup(env, db, e)
+
+	e.Logger.Fatal(e.Start(":" + env.Config.ServerPort))
 }
