@@ -10,6 +10,12 @@ import (
 	glogger "gorm.io/gorm/logger"
 )
 
+type User struct {
+	gorm.Model
+	ID    string
+	Email string
+}
+
 func NewPgDatabase(env *Env) *gorm.DB {
 	dsn := fmt.Sprintf("host=%v user=%v dbname=%v password=%v sslmode=%v",
 		env.Db.Pg.Host,
@@ -36,6 +42,10 @@ func NewPgDatabase(env *Env) *gorm.DB {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	db.AutoMigrate(&User{})
+
+	db.Create(&User{ID: "1234", Email: "asd@asd.com"})
 
 	logger.Info("[DB] Postgres Database has been initialize")
 	return db
