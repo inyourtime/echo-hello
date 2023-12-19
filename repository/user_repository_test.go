@@ -61,6 +61,22 @@ func TestFindUserByEmail_shouldFound(t *testing.T) {
 	assert.Nil(t, mock.ExpectationsWereMet())
 }
 
+func TestFindUserByEmail_shouldNotFound(t *testing.T) {
+	sqlDB, db, mock := mock.MockDB(t)
+	defer sqlDB.Close()
+
+	ur := NewUserRepository(db)
+	user := sqlmock.NewRows([]string{"id", "email", "password", "name", "created_at", "updated_at", "deleted_at"})
+
+	expectedSQL := `SELECT (.+) FROM "users" WHERE email = (.+) AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1`
+
+	mock.ExpectQuery(expectedSQL).WithArgs("foo@mail.com").WillReturnRows(user)
+	_, err := ur.FindByEmail("foo@mail.com")
+
+	assert.True(t, errors.Is(err, gorm.ErrRecordNotFound))
+	assert.Nil(t, mock.ExpectationsWereMet())
+}
+
 func TestFindUserAll(t *testing.T) {
 	sqlDB, db, mock := mock.MockDB(t)
 	defer sqlDB.Close()
