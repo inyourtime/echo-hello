@@ -2,6 +2,7 @@ package bootstrap
 
 import (
 	"echo-hello/internal/logger"
+	"echo-hello/model"
 	"fmt"
 	"log"
 
@@ -10,19 +11,10 @@ import (
 	glogger "gorm.io/gorm/logger"
 )
 
-type User struct {
-	gorm.Model
-	ID    string
-	Email string
-}
-
 func NewPgDatabase(env *Env) *gorm.DB {
 	dsn := fmt.Sprintf("host=%v user=%v dbname=%v password=%v sslmode=%v",
-		env.Db.Pg.Host,
-		env.Db.Pg.User,
-		env.Db.Pg.Database,
-		env.Db.Pg.Password,
-		env.Db.Pg.Ssl,
+		env.Db.Pg.Host, env.Db.Pg.User,
+		env.Db.Pg.Database, env.Db.Pg.Password, env.Db.Pg.Ssl,
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
@@ -43,9 +35,9 @@ func NewPgDatabase(env *Env) *gorm.DB {
 		log.Fatal(err)
 	}
 
-	db.AutoMigrate(&User{})
+	db.AutoMigrate(&model.User{})
 
-	db.Create(&User{ID: "1234", Email: "asd@asd.com"})
+	// db.Create(&User{ID: "1234", Email: "asd@asd.com"})
 
 	logger.Info("[DB] Postgres Database has been initialize")
 	return db

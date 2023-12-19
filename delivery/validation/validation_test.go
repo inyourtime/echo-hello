@@ -10,6 +10,7 @@ import (
 )
 
 func TestNewCustomValidator(t *testing.T) {
+	t.Parallel()
 	v := validator.New()
 	cv := NewCustomValidator(v)
 	assert.NotNil(t, cv)
@@ -28,6 +29,7 @@ func TestCustomValidator_Validate(t *testing.T) {
 	cv := NewCustomValidator(v)
 
 	t.Run("ValidInput", func(t *testing.T) {
+		t.Parallel()
 		// Valid input should not return an error
 		input := TestStruct{Name: "John", Email: "john@example.com"}
 		err := cv.Validate(input)
@@ -35,6 +37,7 @@ func TestCustomValidator_Validate(t *testing.T) {
 	})
 
 	t.Run("InvalidInput", func(t *testing.T) {
+		t.Parallel()
 		// Invalid input should return an echo.HTTPError with status code 400
 		input := TestStruct{Name: "", Email: "invalid-email"}
 		err := cv.Validate(input)
@@ -56,6 +59,7 @@ func TestCustomValidator_Validate_TagNameFunc(t *testing.T) {
 	cv := NewCustomValidator(v)
 
 	t.Run("TagIgnoreField", func(t *testing.T) {
+		t.Parallel()
 		// The field with json:"-" should be ignored by the validator
 		input := TestStruct{Name: "John"}
 		err := cv.Validate(input)
@@ -63,6 +67,7 @@ func TestCustomValidator_Validate_TagNameFunc(t *testing.T) {
 	})
 
 	t.Run("TagIgnoreField_Error", func(t *testing.T) {
+		t.Parallel()
 		// The field with json:"-" should be ignored by the validator
 		input := TestStruct{Name: ""}
 		err := cv.Validate(input)

@@ -1,6 +1,10 @@
 package bootstrap
 
-import "gorm.io/gorm"
+import (
+	"echo-hello/internal/logger"
+
+	"gorm.io/gorm"
+)
 
 type Application struct {
 	Env *Env
@@ -8,6 +12,7 @@ type Application struct {
 }
 
 func App() Application {
+	logger.New()
 	app := &Application{}
 	app.Env = NewEnv()
 	app.Db = NewPgDatabase(app.Env)

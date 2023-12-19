@@ -12,7 +12,7 @@ import (
 
 var logz *zap.Logger
 
-func init() {
+func New() {
 	dcCore := newDiscordCore()
 	csCore := newConsoleCore()
 	logz = zap.New(zapcore.NewTee(dcCore, csCore), zap.AddCaller(), zap.AddCallerSkip(1))
