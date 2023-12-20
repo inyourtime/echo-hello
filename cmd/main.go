@@ -14,7 +14,7 @@ func main() {
 
 	e := echo.New()
 
-	route.Setup(env, db, e)
+	route.New(env, db, e)
 
 	e.Logger.Fatal(e.Start(":" + env.Config.ServerPort))
 }

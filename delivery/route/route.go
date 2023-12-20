@@ -17,7 +17,7 @@ type UserReq struct {
 	Email string `json:"email" validate:"required,email"`
 }
 
-func Setup(env *bootstrap.Env, db *gorm.DB, e *echo.Echo) {
+func New(env *bootstrap.Env, db *gorm.DB, e *echo.Echo) {
 	/* Middleware */
 	e.Use(middleware.CORS())
 	e.Use(middleware.RecoverWithConfig(middleware.RecoverConfig{

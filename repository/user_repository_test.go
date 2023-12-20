@@ -12,6 +12,7 @@ import (
 )
 
 func TestFindUser_shouldFound(t *testing.T) {
+	t.Parallel()
 	sqlDB, db, mock := mock.MockDB(t)
 	defer sqlDB.Close()
 
@@ -29,6 +30,7 @@ func TestFindUser_shouldFound(t *testing.T) {
 }
 
 func TestFindUser_shouldNotFound(t *testing.T) {
+	t.Parallel()
 	sqlDB, db, mock := mock.MockDB(t)
 	defer sqlDB.Close()
 
@@ -45,6 +47,7 @@ func TestFindUser_shouldNotFound(t *testing.T) {
 }
 
 func TestFindUserByEmail_shouldFound(t *testing.T) {
+	t.Parallel()
 	sqlDB, db, mock := mock.MockDB(t)
 	defer sqlDB.Close()
 
@@ -62,6 +65,7 @@ func TestFindUserByEmail_shouldFound(t *testing.T) {
 }
 
 func TestFindUserByEmail_shouldNotFound(t *testing.T) {
+	t.Parallel()
 	sqlDB, db, mock := mock.MockDB(t)
 	defer sqlDB.Close()
 
@@ -78,6 +82,7 @@ func TestFindUserByEmail_shouldNotFound(t *testing.T) {
 }
 
 func TestFindUserAll(t *testing.T) {
+	t.Parallel()
 	sqlDB, db, mock := mock.MockDB(t)
 	defer sqlDB.Close()
 
