@@ -2,6 +2,7 @@ package route
 
 import (
 	"echo-hello/bootstrap"
+	"echo-hello/delivery/middleware/authenticate"
 	"echo-hello/delivery/validation"
 	"echo-hello/internal/logger"
 	"net/http"
@@ -51,6 +52,13 @@ func New(env *bootstrap.Env, db *gorm.DB, e *echo.Echo) {
 		}
 		return c.JSON(http.StatusOK, user)
 	})
+
+	// add jwt guard
+	// e.Use(authenticate.JWT())
+
+	e.GET("/auth", func(c echo.Context) error {
+		return c.String(200, "hello")
+	}, authenticate.JWT())
 
 	logger.Info("[ROUTE] All routes has been register")
 }
